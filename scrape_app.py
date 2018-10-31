@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from multiprocessing import Pool
 import json
 import time
@@ -53,15 +53,7 @@ def scrape_indeed():
           + str(total_time) + " taking an average of " + str(total_time / len(incoming_json['urls'])) +
           " seconds per request.")
 
-    # Looks a bit silly but by dumping and loading it again you get rid of the slashes and other escape characters
-    # python puts in that are valid but ugly looking json.
-    json_intermediary = json.dumps(response_list)
-    final_response = json.loads(json_intermediary)
-
-    # Print out the responses nicely for people.
-    print(json.dumps(final_response, sort_keys=True, indent=4, separators=(',', ': ')))
-
-    return 'HTTP 200 Success'
+    return jsonify(response_list)
 
 
 if __name__ == "__main__":

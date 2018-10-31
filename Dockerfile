@@ -13,9 +13,9 @@ FROM ubuntu:16.04
 MAINTAINER Chris Lee "topagae@gmail.com"
 
 RUN apt-get update -y && \
-    apt-get install -y python-pip python-dev
+    apt-get install -y python3-pip python3-dev
 
-RUN pip install --upgrade pip
+RUN pip3 install --upgrade pip
 
 # Copy the requirements.txt first to leverage Docker cache. Then the two python files we need.
 COPY ./requirements.txt /app/requirements.txt
@@ -24,11 +24,11 @@ COPY ./requirements.txt /app/requirements.txt
 WORKDIR /app
 
 # Install the things we need to run the app.
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
 # Copy everything else into the app. Should get us our two python files, readme and test data.
 COPY . /app
 
-ENTRYPOINT ["python"]
+ENTRYPOINT ["python3"]
 
 CMD ["scrape_app.py"]
